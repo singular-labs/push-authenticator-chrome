@@ -1,0 +1,39 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html style="height: 476px; width: 350px;">
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="jquery-2.2.4.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <div>
+        <h3 id="status" style="margin-left: 26px;">null</h3>
+        <div style="height: 390px;width: 350px">
+            <div id="qr_code" style="display: none;">
+                <img id="qr_code_img" src="">
+                <div id="qrcode_help" style="margin-left: 26px;">
+
+                    Scan this QR code on your device
+                    <div><a id="google_play_link" href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' style="height: 50px"/></a></div>
+                </div>
+            </div>
+
+            <div id="accounts">
+                <table class="table table-hover" id="accounts_table">
+                </table>
+            </div>
+        </div>
+        <div id="reset" style="margin-left: 26px;cursor: pointer;">
+            <a>Reset</a>
+        </div>
+    </div>
+  </body>
+</html>
+

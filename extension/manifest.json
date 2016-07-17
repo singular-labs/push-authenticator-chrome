@@ -1,0 +1,31 @@
+{
+    "manifest_version": 2,
+
+    "name": "Push Authenticator",
+    "description": "Two Factor Authentication Simplified using Push Notification Verification",
+    "version": "1.337",
+    "icons": {
+        "128": "authenticator_singular.png"
+    },
+    "browser_action": {
+        "default_icon": "authenticator_singular.png",
+        "default_popup": "popup.html",
+        "default_title": "Click here!"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "css": [],
+            "js": ["jquery-2.2.4.min.js", "content_script.js"]
+        }
+    ],
+    "background": {
+        "scripts": ["jquery-2.2.4.min.js", "sjcl.js", "background.js"]
+    },
+    "permissions": [
+        "activeTab",
+        "clipboardWrite",
+        "gcm",
+        "storage"
+    ]
+}
