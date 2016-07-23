@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
 
-    "name": "Push Authenticator",
+    "name": "Push Auth",
     "description": "Two Factor Authentication Simplified using Push Notification Verification",
     "version": "1.337",
     "icons": {
