@@ -6,7 +6,25 @@ function openGooglePlay(){
 }
 
 function renderStatus(statusText) {
-    document.getElementById('status').textContent = statusText;
+    toastr.clear();
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "8000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    toastr["info"](statusText);
 }
 
 function debug(msg){
@@ -35,7 +53,6 @@ function getCode(id) {
 
 document.addEventListener('DOMContentLoaded', function() {
     debug("DOMContentLoaded");
-    renderStatus("init");
     document.getElementById("google_play_link").onclick = openGooglePlay;
     document.getElementById("reset").onclick = reset;
     getUI();
@@ -44,22 +61,26 @@ document.addEventListener('DOMContentLoaded', function() {
 function handleState(state){
     if(state.step == "init"){
         $("#qr_code").show();
+        $("#accounts").hide();
         var pair_message = {registrationId: state.localRegistrationId, PSK: state.psk};
         var encoded_message = JSON.stringify(pair_message);
         var qrcode_src = "https://chart.googleapis.com/chart?cht=qr&chs=320x320&chl=" + encodeURIComponent(encoded_message);
         $("#qr_code_img").attr("src", qrcode_src);
     }else{
         $("#qr_code").hide();
+        $("#accounts").show();
     }
     if(state.step == "loaded"){
         $("#accounts_table").empty();
+        if(state.accounts.length == 0){
+            $("#accounts_table").append("<tr style=\"cursor: pointer;\"><td>No accounts configured</td></tr>");
+        }
         state.accounts.forEach(function(currentValue,index,arr){
             var element_id = "li_" + currentValue.id;
             $("#accounts_table").append("<tr style=\"cursor: pointer;\" id=\"" + element_id + "\"><td>" + currentValue.name + "</td></tr>");
             document.getElementById(element_id).onclick = function(){getCode(currentValue.id)};
         });
     }
-    renderStatus(state.statusMessage);
 }
 
 chrome.extension.onMessage.addListener(
@@ -69,6 +90,10 @@ chrome.extension.onMessage.addListener(
         if (command == "drawState"){
             debug("state = " + request.state);
             handleState(request.state);
+        }
+        if (command == "updateStatus"){
+            debug("status = " + request.status);
+            renderStatus(request.status);
         }
         sendResponse({success: true});
     });

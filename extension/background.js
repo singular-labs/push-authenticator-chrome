@@ -166,20 +166,21 @@ function handleGCMMessage(message) {
             state.remoteRegistrationId = message.data.src;
             saveState();
             getAccounts();
+            updateStatusMessage("Paired with App!");
             break;
         case "accountList":
             debug("handleGCMMessage: handle accountList");
             state.step = "loaded";
             state.accounts = value.accounts;
-            updateStatusMessage("Select account");
             saveState();
             break;
         case "code":
             debug("handleGCMMessage: handle code");
             if(waiting_for_code){
-                copy(value.value);
+                var code_value = value.value;
+                copy(code_value);
                 waiting_for_code = false;
-                updateStatusMessage("Code copied :)");
+                updateStatusMessage(`Code '${code_value}' was copied to your clipboard`);
             }else{
                 debug("got code but was not waiting for one...");
             }
@@ -195,11 +196,13 @@ function handleGCMMessage(message) {
             break;
     }
     last_gcm_message = message;
+    updateUI();
 }
 
 function updateStatusMessage(new_message){
-    state.statusMessage = new_message;
-    updateUI();
+    chrome.extension.sendMessage({command: "updateStatus", status: new_message}, function(response) {
+        debug("updateStatus: done");
+    });
 }
 
 function handleExtensionMessage(request, sender, sendResponse){
