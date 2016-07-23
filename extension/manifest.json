@@ -10,7 +10,7 @@
     "browser_action": {
         "default_icon": "icons/app_icon_38x38.png",
         "default_popup": "popup.html",
-        "default_title": "Click here!"
+        "default_title": "Push Authenticator"
     },
     "content_scripts": [
         {
