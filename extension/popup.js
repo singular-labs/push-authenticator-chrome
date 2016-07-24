@@ -73,11 +73,11 @@ function handleState(state){
     if(state.step == "loaded"){
         $("#accounts_table").empty();
         if(state.accounts.length == 0){
-            $("#accounts_table").append("<tr style=\"cursor: pointer;\"><td>No accounts configured</td></tr>");
+            $("#accounts_table").append("<tr style=\"cursor: pointer;\"><td><span style=\"margin-left:15px;\">No accounts configured</span></td></tr>");
         }
         state.accounts.forEach(function(currentValue,index,arr){
             var element_id = "li_" + currentValue.id;
-            $("#accounts_table").append("<tr style=\"cursor: pointer;\" id=\"" + element_id + "\"><td>" + currentValue.name + "</td></tr>");
+            $("#accounts_table").append("<tr style=\"cursor: pointer;\" id=\"" + element_id + "\"><td><span style=\"margin-left:15px;\">" + currentValue.name + "</span></td></tr>");
             document.getElementById(element_id).onclick = function(){getCode(currentValue.id)};
         });
     }
