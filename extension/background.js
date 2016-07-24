@@ -180,7 +180,7 @@ function handleGCMMessage(message) {
                 var code_value = value.value;
                 copy(code_value);
                 waiting_for_code = false;
-                updateStatusMessage(`Code '${code_value}' was copied to your clipboard`);
+                updateStatusMessage(`Code '${code_value}' was copied to your clipboard`, "success");
             }else{
                 debug("got code but was not waiting for one...");
             }
@@ -189,7 +189,7 @@ function handleGCMMessage(message) {
             debug("handleGCMMessage: handle reject");
             if(waiting_for_code){
                 waiting_for_code = false;
-                updateStatusMessage("Reject :(");
+                updateStatusMessage("Reject :(", "error");
             }else{
                 debug("got reject but was not waiting for one...");
             }
@@ -199,8 +199,8 @@ function handleGCMMessage(message) {
     updateUI();
 }
 
-function updateStatusMessage(new_message){
-    chrome.extension.sendMessage({command: "updateStatus", status: new_message}, function(response) {
+function updateStatusMessage(newMessage, toastType="info"){
+    chrome.extension.sendMessage({command: "updateStatus", status: newMessage, toastType: toastType}, function(response) {
         debug("updateStatus: done");
     });
 }

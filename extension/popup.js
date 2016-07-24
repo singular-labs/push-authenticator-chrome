@@ -5,7 +5,7 @@ function openGooglePlay(){
     chrome.tabs.create({ url: newURL });
 }
 
-function renderStatus(statusText) {
+function renderStatus(toastType, statusText) {
     toastr.clear();
     toastr.options = {
         "closeButton": false,
@@ -24,7 +24,7 @@ function renderStatus(statusText) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-    toastr["info"](statusText);
+    toastr[toastType](statusText);
 }
 
 function debug(msg){
@@ -93,7 +93,8 @@ chrome.extension.onMessage.addListener(
         }
         if (command == "updateStatus"){
             debug("status = " + request.status);
-            renderStatus(request.status);
+            var toastType = request.toastType;
+            renderStatus(toastType, request.status);
         }
         sendResponse({success: true});
     });
