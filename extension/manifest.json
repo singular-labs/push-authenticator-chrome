@@ -3,7 +3,7 @@
 
     "name": "Push Auth",
     "description": "Two Factor Authentication Simplified using Push Notification Verification",
-    "version": "1.0",
+    "version": "2.0",
     "icons": {
         "128": "icons/app_icon_128x128.png"
     },
