@@ -77,8 +77,21 @@ function handleState(state){
         }
         state.accounts.forEach(function(currentValue,index,arr){
             var element_id = "li_" + currentValue.id;
-            $("#accounts_table").append("<tr style=\"cursor: pointer;\" id=\"" + element_id + "\"><td><span style=\"margin-left:15px;\">" + currentValue.name + "</span></td></tr>");
-            document.getElementById(element_id).onclick = function(){getCode(currentValue.id)};
+            $("#accounts_table").append(
+                "<tr style=\"cursor: pointer;\" id=\"" + element_id + "\">" + 
+                "<td>" + 
+                "<span style=\"margin-left:15px;\">" + 
+                currentValue.name +
+                "</span></td></tr>"
+            );
+
+            document.getElementById(element_id).onclick = function() {
+                $("#" + element_id).animate({backgroundColor: "#48C26C"}, 200, function() {
+                    $("#" + element_id).animate({backgroundColor: ""});
+                });
+
+                getCode(currentValue.id);
+            };
         });
     }
 }
